@@ -2,13 +2,36 @@
 # It allows users to create, show, search, and delete contacts.
 
 # Function to create a new contact and append it to the contacts.txt file.
+
+import re  # Import the regular expression module
+
+#function to check the number is valid or not 
+def valid_phone_number():
+    pattern = r'^[0-9]{10}$'
+    phone_number = input("Enter the phone number: ")
+    if re.match(pattern, phone_number):
+        return phone_number
+    else:
+       print("Invalid phone number. Please try again.")
+       valid_phone_number()
+
+#function to check the email is valid or not 
+def valid_emai():
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    email = input("Enter the email:")
+    if re.match(pattern,email):
+        return email
+    else:
+        print("Invalid email address. Please try again.")
+        valid_emai()  # Recursively call the function until a valid email is entered
+
+
 def create_contact():
     with open("contacts.txt", 'a') as f:
         fname = input_fname()
         lname = input_lname()
-        phone_number = input("Enter the phone number: ")
-        email = input("Enter the email: ")
-
+        phone_number = valid_phone_number()
+        email = valid_emai()
         name = fname + " " + lname
         f.write(f"[ {name} ,{phone_number}, {email} ]\n")
         print("Contact created successfully")
@@ -19,12 +42,16 @@ def show_contacts():
         contacts = f.readlines()
         if contacts:  # Check if there are any contacts in the list
             for contact in contacts:
-                print(contact)
+                each_conntact = contact.strip("[]").rsplit(",")# Split the contact into a list of parts
+                name = each_conntact[0]
+                phone_number = each_conntact[1]
+                email = each_conntact[2].replace("]", "")# Remove any spaces from the email
+                print(f"Name: {name}")
+                print(f"Phone Number: {phone_number}")
+                print(f"Email: {email}")
+                print("-"*20)
         else:
             print("No contacts found")
-
-
-
 
 # Function to search for a contact by name in the contacts.txt file.
 def search_contact():
@@ -82,6 +109,7 @@ def main():
         print("3. Search Contact")
         print("4. Delete Contact")
         print("5. Exit")
+        print("-"*20)
         choice = int(input("Enter your choice: "))
 
         if choice == 1:
@@ -94,7 +122,7 @@ def main():
             delete_contact()
         elif choice == 5:
             return 0  # Exit the program
-            break
+            
         else:
             print("Invalid choice")
 

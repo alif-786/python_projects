@@ -17,8 +17,14 @@ def create_contact():
 def show_contacts():
     with open("contacts.txt", 'r') as f:
         contacts = f.readlines()
-        for contact in contacts:
-            print(contact)
+        if contacts:  # Check if there are any contacts in the list
+            for contact in contacts:
+                print(contact)
+        else:
+            print("No contacts found")
+
+
+
 
 # Function to search for a contact by name in the contacts.txt file.
 def search_contact():

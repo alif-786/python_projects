@@ -19,7 +19,7 @@
 
 4. Install the required packages:
 ```
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 5. Run the project:

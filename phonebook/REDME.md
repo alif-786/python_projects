@@ -27,10 +27,12 @@ Welcome to the Phonebook Application! This program allows users to create, show,
 5. Run the following command:
 
 ```bash
-python phonebook.py
+python main.py
 ```
 # Directory structure
+```
 phonebook/
 │
 ├── phonebook.py
 └── contacts.txt
+```

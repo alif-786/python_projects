@@ -10,7 +10,7 @@ The Bazar Management System is a Python-based application that allows users to m
 
 1. Clone the repository:
    ```
-   git clone 
+   git clone https://github.com/alif-786/python_projects/tree/main/Bazar%20management
    ```
 
 3. Navigate to the project directory:

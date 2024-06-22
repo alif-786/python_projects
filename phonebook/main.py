@@ -16,29 +16,29 @@ def valid_phone_number():
        valid_phone_number()
 
 #function to check the email is valid or not 
-def valid_emai():
+def valid_email():
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     email = input("Enter the email:")
     if re.match(pattern,email):
         return email
     else:
         print("Invalid email address. Please try again.")
-        valid_emai()  # Recursively call the function until a valid email is entered
+        valid_email()  # Recursively call the function until a valid email is entered
 
 
 def create_contact():
-    with open("contacts.txt", 'a') as f:
+    with open("./contacts.txt", 'a') as f:
         fname = input_fname()
         lname = input_lname()
         phone_number = valid_phone_number()
-        email = valid_emai()
+        email = valid_email()
         name = fname + " " + lname
         f.write(f"[ {name} ,{phone_number}, {email} ]\n")
         print("Contact created successfully")
 
 # Function to display all contacts from the contacts.txt file.
 def show_contacts():
-    with open("contacts.txt", 'r') as f:
+    with open("./contacts.txt", 'r') as f:
         contacts = f.readlines()
         if contacts:  # Check if there are any contacts in the list
             for contact in contacts:
@@ -56,7 +56,7 @@ def show_contacts():
 # Function to search for a contact by name in the contacts.txt file.
 def search_contact():
     name = input("Enter the name to search: ")
-    with open("contacts.txt", 'r') as f:
+    with open("./contacts.txt", 'r') as f:
         contacts = f.readlines()
         for contact in contacts:
             if name in contact:
@@ -68,7 +68,7 @@ def search_contact():
 # Function to delete a contact by name from the contacts.txt file.
 def delete_contact():
     name = input("Enter the name to delete: ")
-    with open("contacts.txt", 'r') as f:
+    with open("./contacts.txt", 'r') as f:
         contacts = f.readlines()
         found = False
         for contact in contacts:
@@ -80,11 +80,39 @@ def delete_contact():
                 print(f"{name} not found in the phonebook")
 
         if found:
-            with open("contacts.txt", 'w') as f:
+            with open("./contacts.txt", 'r+') as f:
                 f.writelines(contacts)  # Write the updated list back to the file
                 print(f"{name} deleted from the phonebook.")
         else:
             print(f"{name} not found in the phonebook.")
+
+# function for updating the contact from the contact list
+def update_contact():
+    name = input("Enter the name to update: ").capitalize()
+    with open("./contacts.txt", 'r+') as f:
+        contacts = f.readlines()
+        contact_found = False
+        for i, line in enumerate(contacts):
+            if name in line.split(', ')[0]:
+                contact_found = True
+                print("Enter the new details for the contact:")
+                fname = input_fname()
+                lname = input_lname()
+                phone = valid_phone_number()
+                email = valid_email()
+                new_contact = format_contact(fname, lname, phone, email)
+                contacts[i] = new_contact
+                print("Contact updated successfully.")
+                break
+        if not contact_found:
+            print(f"Contact with name '{name}' not found.")
+        else:
+            f.seek(0)
+            f.truncate()
+            f.writelines(contacts)
+
+def format_contact(fname, lname, phone, email):
+    return f"[ {fname} {lname}, {phone}, {email} ]\n"
 
 # Function to get the first name from the user and format it correctly.
 def input_fname():
@@ -108,6 +136,7 @@ def main():
         print("2. Show Contacts")
         print("3. Search Contact")
         print("4. Delete Contact")
+        print("5. update Contact")
         print("5. Exit")
         print("-"*20)
         choice = int(input("Enter your choice: "))
@@ -121,7 +150,9 @@ def main():
         elif choice == 4:
             delete_contact()
         elif choice == 5:
-            return 0  # Exit the program
+            update_contact()
+        elif choice == 6:
+            return 0 # Exit the program
             
         else:
             print("Invalid choice")

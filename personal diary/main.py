@@ -10,14 +10,14 @@ def menu():
 # function for the creating a diary entry 
 def create_diary_entry():
     entry_id = str(uuid.uuid4())[:5]  # Generates a unique 5-character ID for the diary entry.
-    with open("personal diary/diary.txt", "a") as f:  # Opens the diary file in append mode.
+    with open("diary.txt", "a") as f:  # Opens the diary file in append mode.
         diary_content = input("Enter your diary entry: ")
         entry_format = f"[{entry_id}: {diary_content}]\n"
         f.write(entry_format)
         print("Entry added successfully")
 
 def read_diary_entry():
-    with open("personal diary/diary.txt", "r") as f:  # Opens the diary file in read mode.
+    with open("diary.txt", "r") as f:  # Opens the diary file in read mode.
         entries = f.readlines()
         print("ENTRIES :- ")
         for entry in entries:
@@ -28,7 +28,7 @@ def read_diary_entry():
 # function for updating the entry 
 def update_entry():
     update_entry_id = input("Enter the entry id you want to update: ").lower().strip()
-    with open("personal diary/diary.txt", 'r') as f:
+    with open("diary.txt", 'r') as f:
         entries = f.readlines()
 
     entry_found = False
@@ -43,7 +43,7 @@ def update_entry():
             updated_entry.append(entry)
 
     if entry_found:
-        with open("personal diary/diary.txt", 'w') as f:
+        with open("diary.txt", 'w') as f:
             f.writelines(updated_entry)
         print("Entry updated successfully")
     else:

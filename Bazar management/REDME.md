@@ -18,6 +18,11 @@
   ```
 
 4. Install the required packages:
-
+```
+pip install -r requirement.txt
+```
 
 5. Run the project:
+```
+python main.py
+```

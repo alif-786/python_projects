@@ -27,7 +27,7 @@ def valid_email():
 
 
 def create_contact():
-    with open("./contacts.txt", 'a') as f:
+    with open("phonebook/contacts.txt", 'a') as f:
         fname = input_fname()
         lname = input_lname()
         phone_number = valid_phone_number()
@@ -38,7 +38,7 @@ def create_contact():
 
 # Function to display all contacts from the contacts.txt file.
 def show_contacts():
-    with open("./contacts.txt", 'r') as f:
+    with open("phonebook/contacts.txt", 'r') as f:
         contacts = f.readlines()
         if contacts:  # Check if there are any contacts in the list
             for contact in contacts:
@@ -56,7 +56,7 @@ def show_contacts():
 # Function to search for a contact by name in the contacts.txt file.
 def search_contact():
     name = input("Enter the name to search: ")
-    with open("./contacts.txt", 'r') as f:
+    with open("phonebook/contacts.txt", 'r') as f:
         contacts = f.readlines()
         for contact in contacts:
             if name in contact:
@@ -68,7 +68,7 @@ def search_contact():
 # Function to delete a contact by name from the contacts.txt file.
 def delete_contact():
     name = input("Enter the name to delete: ")
-    with open("./contacts.txt", 'r') as f:
+    with open("phonebook/contacts.txt", 'r') as f:
         contacts = f.readlines()
         found = False
         for contact in contacts:
@@ -80,7 +80,7 @@ def delete_contact():
                 print(f"{name} not found in the phonebook")
 
         if found:
-            with open("./contacts.txt", 'r+') as f:
+            with open("phonebook/contacts.txt", 'r+') as f:
                 f.writelines(contacts)  # Write the updated list back to the file
                 print(f"{name} deleted from the phonebook.")
         else:
@@ -89,7 +89,7 @@ def delete_contact():
 # function for updating the contact from the contact list
 def update_contact():
     name = input("Enter the name to update: ").capitalize()
-    with open("./contacts.txt", 'r+') as f:
+    with open("phonebook/contacts.txt", 'r+') as f:
         contacts = f.readlines()
         contact_found = False
         for i, line in enumerate(contacts):
